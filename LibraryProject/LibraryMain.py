@@ -9,25 +9,27 @@
 
 punctuation = ".,!?\n"
 # User login.
-with open("UserLogins.txt", 'a') as file:
-    def account_creation(username, password):
+def account_creation():
+    with open("UserLogins.txt", 'a') as file:
         print("Enter your choice of username: ")
         username = input("")
-        file.write(f"User:\n {username}")
+        file.write(f"User:   {username}\n")
         print("Enter your password: ")
         password = input("")
-        file.write(f"Password:\n {password}")
+        file.write(f"Password:   {password}\n\n\n")
         print("Account successfully created.")
 
-with open("UserLogins.txt", 'r') as file:
-    def login(username, password):
+
+def login():
+    with open("UserLogins.txt", 'r') as file:
         print("Enter your username.")
+        username = input("")
         for line in file:
-            if username == line + " ":
+            if line == f"User:   {username}\n":
                 print("User found. Enter password: ")
                 password = input("")
                 for line in file:
-                    if password == line + " ":
+                    if line == f"Password:   {password}\n\n\n":
                         print("Password entered successfully")
                     else:
                         print("Wrong password, try again.")
@@ -43,6 +45,7 @@ LoginChoice = input("Enter your choice: ")
 while not done:
     if LoginChoice == '1':
         account_creation()
+        done = True
     elif LoginChoice == '2':
         login()
     elif LoginChoice == 'q':
