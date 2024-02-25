@@ -7,8 +7,51 @@
 # TODO 4 (maybe): Add the actual text from the books as files.
     # TODO 4(cont): Add ways to disect the book, like counting number of words
 
+punctuation = ".,!?\n"
+# User login.
+with open("UserLogins.txt", 'a') as file:
+    def account_creation(username, password):
+        print("Enter your choice of username: ")
+        username = input("")
+        file.write(f"User:\n {username}")
+        print("Enter your password: ")
+        password = input("")
+        file.write(f"Password:\n {password}")
+        print("Account successfully created.")
+
+with open("UserLogins.txt", 'r') as file:
+    def login(username, password):
+        print("Enter your username.")
+        for line in file:
+            if username == line + " ":
+                print("User found. Enter password: ")
+                password = input("")
+                for line in file:
+                    if password == line + " ":
+                        print("Password entered successfully")
+                    else:
+                        print("Wrong password, try again.")
+            else:
+                print("Invalid Username.")
+
+print("""Welcome to the Library! What would you like to do:
+1. Create a new account. 
+2. Login to your account.
+q. Quit""")
+done = False
+LoginChoice = input("Enter your choice: ")
+while not done:
+    if LoginChoice == '1':
+        account_creation()
+    elif LoginChoice == '2':
+        login()
+    elif LoginChoice == 'q':
+        done = True
+        print("Thanks for visiting")
 
 
+
+# Book system
 class Book:   # 'Class' is a template that we have not learned in class.
     def __init__(self, title, author, ISBN, year_published, genre, pages, checked_out):
         self.title = title
