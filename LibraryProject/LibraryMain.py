@@ -13,28 +13,38 @@ def account_creation():
     with open("UserLogins.txt", 'a') as file:
         print("Enter your choice of username: ")
         username = input("")
-        file.write(f"User:   {username}\n")
+        file.write(f"{username}\n")
         print("Enter your password: ")
         password = input("")
-        file.write(f"Password:   {password}\n\n\n")
+        file.write(f"{password}#\n\n")
         print("Account successfully created.")
 
+def extract_credentials(file_path):
+    credentials = {}
+
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+        i = 0
+        while i < len(lines):
+            # Extract username and password
+            username = lines[i].strip()
+            password = lines[i + 1].strip()
+
+            # Add to dictionary
+            credentials[username] = password
+
+            # Move to next set of credentials
+            i += 4  # There are 3 new lines between passwords
+
+    return credentials
 
 def login():
+    credentials = {}
     with open("UserLogins.txt", 'r') as file:
+        for line in file:
+
         print("Enter your username.")
         username = input("")
-        for line in file:
-            if line == f"User:   {username}\n":
-                print("User found. Enter password: ")
-                password = input("")
-                for line in file:
-                    if line == f"Password:   {password}\n\n\n":
-                        print("Password entered successfully")
-                    else:
-                        print("Wrong password, try again.")
-            else:
-                print("Invalid Username.")
 
 print("""Welcome to the Library! What would you like to do:
 1. Create a new account. 
