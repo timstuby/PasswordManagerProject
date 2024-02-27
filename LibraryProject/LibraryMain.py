@@ -1,6 +1,6 @@
 """What's missing:
 Error 1: When the file (.txt book) is not named the same as what def create_book_list(): finds for the author
-as the function will only take the part of the book name that is on the same line as "Author:  " in the text file.
+as the function will only take the part of the book name that is on the same line as "title:  " in the text file.
 Login Issue: No safeguard against 2 users having the same username. This will cause only 1 user to be able to sign in.
 """
 
