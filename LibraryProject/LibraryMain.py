@@ -148,6 +148,45 @@ def create_book_dictionary(folder_name='PlainTextBooks'):  # Optional folder_nam
 
     return book_dict
 
+def create_book_list(book_dict):
+    book_list = []
+    for i, (book_name, book_text) in enumerate(book_dict.items()):
+        lines = book_text.splitlines()
+
+        title = None
+        author = None
+        year_published = None
+
+        for line in lines[:100]:  # Limit to the first 100 lines
+            if line.startswith('Title:'):
+                title = line.split(':')[1].strip()
+            elif line.startswith('Author:'):
+                author = line.split(':')[1].strip()
+            elif line.startswith('Original publication:'):
+                year_published = line.split(':')[1].strip()
+
+            # Stop if we have all the information
+            if title and author and year_published:
+                break
+
+        # Use defaults if information is not found
+        title = title or 'Title Not Found'
+        author = author or 'Author Not Found'
+        year_published = year_published or 'Date Not Available'
+
+        book_list.append(Book(title, author, year_published, False))
+
+    return book_list
+
+# Example usage
+folder_name = 'PlainTextBooks'  # Adjust if needed
+book_dict = create_book_dictionary('PlainTextBooks')
+my_book_list = create_book_list(book_dict)
+
+# Access your books:
+for book in my_book_list:
+    print(f"Title: {book.title}, Author: {book.author}")
+
 book1 = Book("The Hobbit", "J.R.R. Tolkien", 1937, True)
 book2 = Book("Pride and Prejudice", "Jane Austen", 1813, False)
 
