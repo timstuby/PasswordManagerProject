@@ -178,78 +178,75 @@ def create_book_list(book_dict):
 
     return book_list
 
-# Example usage
-folder_name = 'PlainTextBooks'  # Adjust if needed
-book_dict = create_book_dictionary('PlainTextBooks')
-my_book_list = create_book_list(book_dict)
+def display_books(book_list):
+    """Displays available books"""
+    if not book_list:
+        print("No books in the library currently.")
+        return
 
-# Access your books:
-for book in my_book_list:
-    print(f"Title: {book.title}, Author: {book.author}")
+    print("Available Books:")
+    for i, book in enumerate(book_list):
+        print(f"{i + 1}. {book.title} by {book.author}")
 
-book1 = Book("The Hobbit", "J.R.R. Tolkien", 1937, True)
-book2 = Book("Pride and Prejudice", "Jane Austen", 1813, False)
-
-
-def experience():
+def experience(book_list):
+    """Guides the user through the library experience"""
     done = False
     while not done:
         print("""What would you like to do? 
         1. View books in our library. 
-        2. Return a book.
+        2. Borrow a book.
+        3. Return a book.
         q. Quit""")
+
         choice_experience = input()
-        if choice_experience == '1':
-            print(f"The books are {book1.title}, {book2.title}")
-            print("Which book would you like to select?")
-            book_choice = int(input("Insert a number: "))
-            if book_choice == 1:
-                print(book1.title, "by", book1.author)
-                print("This book is", book1.get_age(), "years old")
-                if book1.check_checked_out() == False:
-                    print("This book is available, would you like to borrow it?")
-                    choice = input("Type 'Yes or No': ")
-                    if choice == "Yes":
-                        book1.checking_out()
+
+        if choice_experience == '1':  # View books
+            display_books(book_list)
+
+        elif choice_experience == '2':  # Borrow a book
+            display_books(book_list)
+            while True:
+                try:
+                    book_choice = int(input("Select a book by number: "))
+                    if 0 < book_choice <= len(book_list):  # Check for valid input
+                        selected_book = book_list[book_choice - 1]
+                        if selected_book.checked_out:
+                            print("This book is already checked out.")
+                        else:
+                            selected_book.checking_out()
+                            print("Book successfully checked out.")
+                        break  # Exit the loop on successful selection
                     else:
-                        print("Thanks for visiting!")
-                else:
-                    print("This book is checked out.")
-            elif book_choice == 2:
-                print(book2.title, "by", book2.author)
-                print("This book is", book2.get_age(), "years old")
-                if book2.check_checked_out() == False:
-                    print("This book is available, would you like to borrow it?")
-                    choice = input("Type 'Yes or No': ")
-                    if choice == "Yes":
-                        book2.checking_out()
-                        print("Book successfully checked out.")
+                        print("Invalid book selection.")
+                except ValueError:
+                    print("Invalid input. Please enter a number.")
+
+        elif choice_experience == '3':  # Return a book
+            display_books(book_list)
+            while True:
+                try:
+                    book_choice = int(input("Select a book to return by number: "))
+                    if 0 < book_choice <= len(book_list):
+                        selected_book = book_list[book_choice - 1]
+                        if not selected_book.checked_out:
+                            print("This book is not currently checked out.")
+                        else:
+                            selected_book.returning()
+                            print("Book successfully returned.")
+                        break
                     else:
-                        print("Thanks for visiting!")
-                else:
-                    print("This book is checked out.")
-        elif choice_experience == '2':
-            print(f"The books are {book1.title}, {book2.title}")
-            print("Which book would you like to return?")
-            book_choice = int(input("Insert a number: "))
-            if book_choice == 1:
-                if book1.check_checked_out() == False:
-                    print("This book has not been checked out...")
-                else:
-                    print("Returning book...")
-                    book1.returning()
-            elif book_choice == 2:
-                if book2.check_checked_out() == False:
-                    print("This book has not been checked out...")
-                else:
-                    print("Returning book...")
-                    book2.returning()
-            else:
-                print("Invalid book input.")
+                        print("Invalid book selection.")
+                except ValueError:
+                    print("Invalid input. Please enter a number.")
+
         elif choice_experience == 'q':
             done = True
             print("Thanks for visiting.")
         else:
-            print("Invalid book input.")
+            print("Invalid input.")
 
-experience()
+# Example usage (remains the same)
+folder_name = 'PlainTextBooks'
+book_dict = create_book_dictionary(folder_name)
+my_book_list = create_book_list(book_dict)
+experience(my_book_list)
