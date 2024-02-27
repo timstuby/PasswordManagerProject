@@ -150,6 +150,30 @@ def create_book_list(book_dict):
         book_list.append(Book(title, author, year_published, False))
 
     return book_list
+def print_page(book_text, start_line):
+  """Displays a 30-line page from the given book text."""
+  end_line = min(start_line + 30, len(book_text.splitlines()))
+  page_text = '\n'.join(book_text.splitlines()[start_line:end_line])
+  print(page_text)
+
+def read_book(book, book_text):
+  """Allows the user to read the selected book."""
+  start_line = 0
+  done = False
+
+  while not done:
+    print_page(book_text, start_line)
+    print("\nOptions: 1 (Next Page), 2 (Previous Page), q (Quit)")
+    choice = input()
+
+    if choice == '1':
+      start_line += 30  # Move to the next page
+    elif choice == '2':
+      start_line = max(0, start_line - 30)   # Move back a page
+    elif choice == 'q':
+      done = True
+    else:
+      print("Invalid input.")
 
 def display_books(book_list):
     """Displays available books"""
@@ -188,6 +212,11 @@ def experience(book_list):
                         else:
                             selected_book.checking_out()
                             print("Book successfully checked out.")
+
+                            read_choice = input("Would you like to read the book now? (y/n): ")
+                            if read_choice.lower() == 'y':
+                                book_name = selected_book.title  # Get the title for lookup
+                                read_book(selected_book, book_dict[book_name])
                         break  # Exit the loop on successful selection
                     else:
                         print("Invalid book selection.")
