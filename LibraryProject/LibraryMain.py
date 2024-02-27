@@ -1,11 +1,14 @@
 # Exercise using the class function, (not seen in class).
 
 # Objective: Build a functioning library system.
+
 # TODO 4 (maybe): Add the actual text from the books as files.
     # TODO 4(cont): Add ways to disect the book, like counting number of words
 
 punctuation = ".,!?\n"
 # User login.
+
+#TODO: Prevent user from writing to file unless both password and username are provided. Providing just one will cause the code not to work
 def account_creation():
     with open("UserLogins.txt", 'a') as file:
         print("Enter your choice of username: ")
@@ -98,12 +101,10 @@ while not done:
 
 # Book system
 class Book:
-    def __init__(self, title, author, year_published, genre, pages, checked_out):
+    def __init__(self, title, author, year_published, checked_out):
         self.title = title
         self.author = author
         self.year_published = year_published
-        self.genre = genre
-        self.pages = pages
         self.checked_out = checked_out
     def get_age(self):
         import datetime
@@ -119,10 +120,36 @@ class Book:
     def check_checked_out(self):
         return self.checked_out
 
+# Retrieve text from books and store into a dictionary:
+import os
 
+def create_book_dictionary(folder_name='PlainTextBooks'):  # Optional folder_name parameter
+    """Creates a dictionary where keys are book names and values are the book's text.
 
-book1 = Book("The Hobbit", "J.R.R. Tolkien", 1937, "Fiction", 550, True)
-book2 = Book("Pride and Prejudice", "Jane Austen", 1813, "Non-Fiction", 340, False)
+    Args:
+        folder_name (str): The name of the folder containing the book text files,
+                           relative to the script's location. Defaults to 'books'.
+
+    Returns:
+        dict: A dictionary where keys are book filenames (without extension)
+              and values are the corresponding file contents.
+    """
+
+    script_dir = os.path.dirname(__file__)  # Get the directory of the current script
+    folder_path = os.path.join(script_dir, folder_name)
+
+    book_dict = {}
+    for filename in os.listdir(folder_path):
+        if filename.endswith('.txt'):  # Assuming your book files are .txt
+            book_name, _ = os.path.splitext(filename)  # Remove the '.txt' extension
+            with open(os.path.join(folder_path, filename), 'r') as file:
+                book_text = file.read()
+                book_dict[book_name] = book_text
+
+    return book_dict
+
+book1 = Book("The Hobbit", "J.R.R. Tolkien", 1937, True)
+book2 = Book("Pride and Prejudice", "Jane Austen", 1813, False)
 
 
 def experience():
