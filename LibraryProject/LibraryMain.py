@@ -45,6 +45,19 @@ def login():
 
         print("Enter your username.")
         username = input("")
+#def login():
+ #   credentials = extract_credentials("UserLogins.txt")
+    
+  #  print("Enter your username:")
+   # username = input("")
+    # print("Enter your password:")
+   # password = input("")
+
+    # if username in credentials and credentials[username] == password:
+    #    print("Login successful!")
+    #else:
+    #    print("Invalid username or password.")
+
 
 print("""Welcome to the Library! What would you like to do:
 1. Create a new account. 
