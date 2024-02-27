@@ -1,4 +1,8 @@
-
+"""What's missing:
+Error 1: When the file (.txt book) is not named the same as what def create_book_list(): finds for the author
+as the function will only take the part of the book name that is on the same line as "Author:  " in the text file.
+Login Issue: No safeguard against 2 users having the same username. This will cause only 1 user to be able to sign in.
+"""
 
 
 # User login.
@@ -136,7 +140,7 @@ def create_book_list(book_dict):
             elif line.startswith('Author:'):
                 author = line.split(':')[1].strip()
             elif line.startswith('Original publication:'):
-                year_published = line.split(':')[1].strip()
+                year_published = line.split(':')[1].strip() #This doesn't work -- it'll take the publishing house instead of the year
 
             # Stop if we have all the information
             if title and author and year_published:
@@ -246,6 +250,7 @@ def experience(book_list):
             print("Thanks for visiting.")
         else:
             print("Invalid input.")
+    print("All books have been returned.\n")
 
 
 print("""Welcome to the Library! What would you like to do:
