@@ -1,13 +1,7 @@
-# Exercise using the class function, (not seen in class).
 
-# Objective: Build a functioning library system.
 
-# TODO 4 (maybe): Add the actual text from the books as files.
-    # TODO 4(cont): Add ways to disect the book, like counting number of words
 
-punctuation = ".,!?\n"
 # User login.
-
 #TODO: Prevent user from writing to file unless both password and username are provided. Providing just one will cause the code not to work
 def account_creation():
     with open("UserLogins.txt", 'a') as file:
@@ -37,7 +31,6 @@ def extract_credentials(file_path):
             i += 4  # There are 3 new lines between passwords
 
     return credentials
-
 
 def login():
     credentials = extract_credentials("UserLogins.txt")
@@ -80,25 +73,6 @@ def login():
                 print("Invalid input, try again")
 
 
-print("""Welcome to the Library! What would you like to do:
-1. Create a new account. 
-2. Login to your account.
-q. Quit""")
-done = False
-LoginChoice = input("Enter your choice: ")
-while not done:
-    if LoginChoice == '1':
-        account_creation()
-        done = True
-    elif LoginChoice == '2':
-        login()
-        done = True
-    elif LoginChoice == 'q':
-        done = True
-        print("Thanks for using this program.")
-
-
-
 # Book system
 class Book:
     def __init__(self, title, author, year_published, checked_out):
@@ -110,7 +84,6 @@ class Book:
         import datetime
         current_year = datetime.datetime.now().year
         return current_year - self.year_published
-
 
     def checking_out(self):
         self.checked_out = True
@@ -244,6 +217,24 @@ def experience(book_list):
             print("Thanks for visiting.")
         else:
             print("Invalid input.")
+
+
+print("""Welcome to the Library! What would you like to do:
+1. Create a new account. 
+2. Login to your account.
+q. Quit""")
+done = False
+LoginChoice = input("Enter your choice: ")
+while not done:
+    if LoginChoice == '1':
+        account_creation()
+        done = True
+    elif LoginChoice == '2':
+        login()
+        done = True
+    elif LoginChoice == 'q':
+        done = True
+        print("Thanks for using this program.")
 
 # Example usage (remains the same)
 folder_name = 'PlainTextBooks'
