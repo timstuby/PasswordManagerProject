@@ -1,9 +1,6 @@
 # Exercise using the class function, (not seen in class).
 
 # Objective: Build a functioning library system.
-# TODO 1: Add book donation option
-# TODO 2: Add user login.
-# TODO 3: Add more book options
 # TODO 4 (maybe): Add the actual text from the books as files.
     # TODO 4(cont): Add ways to disect the book, like counting number of words
 
@@ -16,7 +13,7 @@ def account_creation():
         file.write(f"{username}\n")
         print("Enter your password: ")
         password = input("")
-        file.write(f"{password}#\n\n")
+        file.write(f"{password}\n\n\n")
         print("Account successfully created.")
 
 def extract_credentials(file_path):
@@ -38,25 +35,46 @@ def extract_credentials(file_path):
 
     return credentials
 
+
 def login():
-    credentials = {}
-    with open("UserLogins.txt", 'r') as file:
-        for line in file:
-
-        print("Enter your username.")
+    credentials = extract_credentials("UserLogins.txt")
+    attempts = 0
+    while attempts != 4:
+        print("Enter your username:")
         username = input("")
-#def login():
- #   credentials = extract_credentials("UserLogins.txt")
-    
-  #  print("Enter your username:")
-   # username = input("")
-    # print("Enter your password:")
-   # password = input("")
-
-    # if username in credentials and credentials[username] == password:
-    #    print("Login successful!")
-    #else:
-    #    print("Invalid username or password.")
+        print("Enter your password:")
+        password = input("")
+        if username in credentials and credentials[username] == password:
+            print("Login successful!")
+            break
+        elif username in credentials and credentials[username] != password:
+            print("Incorrect password, try again.")
+            attempts += 1
+        elif username not in credentials:
+            print("That username does not exist")
+            # The user doesn't make an attempt on the password here, so we don't count it as an attempt.
+        elif username or password == "Quit":
+            break
+        else:
+            print("Invalid username or password.")
+            attempts += 1
+    if attempts == 4:
+        print("""The login process has failed due to too many incorrect attempts.
+        Would you like to create a new account? 
+        1. Create a new account
+        2. Quit the program
+        """)
+        loop_fail = False  # used to catch invalid input
+        while not loop_fail:
+            fail_choice = input("Enter your choice: ")
+            if fail_choice == "1":
+                account_creation()
+                break
+            elif fail_choice == "2":
+                print("Thanks for using this program.")
+                exit()
+            else:
+                print("Invalid input, try again")
 
 
 print("""Welcome to the Library! What would you like to do:
@@ -71,9 +89,10 @@ while not done:
         done = True
     elif LoginChoice == '2':
         login()
+        done = True
     elif LoginChoice == 'q':
         done = True
-        print("Thanks for visiting")
+        print("Thanks for using this program.")
 
 
 
