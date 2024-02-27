@@ -97,11 +97,10 @@ while not done:
 
 
 # Book system
-class Book:   # 'Class' is a template that we have not learned in class.
-    def __init__(self, title, author, ISBN, year_published, genre, pages, checked_out):
+class Book:
+    def __init__(self, title, author, year_published, genre, pages, checked_out):
         self.title = title
         self.author = author
-        self.ISBN = ISBN
         self.year_published = year_published
         self.genre = genre
         self.pages = pages
@@ -110,6 +109,7 @@ class Book:   # 'Class' is a template that we have not learned in class.
         import datetime
         current_year = datetime.datetime.now().year
         return current_year - self.year_published
+
 
     def checking_out(self):
         self.checked_out = True
@@ -121,8 +121,8 @@ class Book:   # 'Class' is a template that we have not learned in class.
 
 
 
-book1 = Book("The Hobbit", "J.R.R. Tolkien", "9780482103", 1937, "Fiction", 550, True)
-book2 = Book("Pride and Prejudice", "Jane Austen", "9780482101923", 1813, "Non-Fiction", 340, False)
+book1 = Book("The Hobbit", "J.R.R. Tolkien", 1937, "Fiction", 550, True)
+book2 = Book("Pride and Prejudice", "Jane Austen", 1813, "Non-Fiction", 340, False)
 
 
 def experience():
