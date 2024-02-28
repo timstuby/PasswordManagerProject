@@ -267,8 +267,8 @@ while not done:
         login()
         done = True
     elif LoginChoice == 'q':
-        done = True
         print("Thanks for using this program.")
+        exit()
 
 # Example usage (remains the same)
 folder_name = 'PlainTextBooks'
